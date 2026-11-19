@@ -126,7 +126,7 @@ document.getElementById("av-leo").innerHTML=avatar("leo");
 /* ===== ESCENAS ===== */
 const axNames=AXES.map(a=>a.n);
 const SCENES=[
-{t:"1. ¿Qué es un Plan Nacional de Desarrollo?",
+{t:"¿Qué es un Plan Nacional de Desarrollo?",
  lines:[
  {w:"sol",x:"Hola, comunidad. Hoy vamos a entender, paso a paso, las bases del Plan Nacional de Desarrollo 2026 a 2030, llamado «Colombia, la Patria Milagro».",hl:""},
  {w:"leo",x:"Profe, ¿y qué es un plan de desarrollo? Suena a documento que nadie lee.",hl:""},
@@ -143,7 +143,7 @@ const SCENES=[
  <g data-k="d"><rect x="595" y="30" width="155" height="80" rx="14"/><text x="672" y="65">🏛️ Congreso</text><text x="672" y="90">lo discute y aprueba</text></g>
  <path d="M172 70h30M367 70h30M562 70h30" stroke="#c2410c" stroke-width="3" marker-end="url(#ar)"/>
  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#c2410c"/></marker></defs></svg>`},
-{t:"2. Los siete ejes",
+{t:"Los siete ejes",
  lines:[
  {w:"sol",x:"El Plan se organiza en siete ejes. Toca cada porción del círculo para explorarlo.",hl:""},
  {w:"leo",x:"¿Cuáles son?",hl:""},
@@ -161,7 +161,34 @@ const SCENES=[
   w.querySelectorAll("g[data-i]").forEach(g=>g.onclick=()=>{const a=AXES[+g.dataset.i];const b=document.getElementById("axinfo");b.style.borderLeftColor=a.c;
    b.innerHTML=`<b>Eje ${+g.dataset.i+1}: ${a.n}</b><br>Pregunta para reflexionar: ${a.q}${a.detalle?"<br><small>"+a.detalle+"</small>":""}`;
    speakFree("sol","Eje "+(+g.dataset.i+1)+": "+a.n+". Pregúntate: "+a.q)})}},
-{t:"3. Los números que trae el documento",
+{t:"Universidad pública: lo que dicen las bases",
+ lines:[
+ {w:"sol",x:"Veamos qué dicen las bases sobre la educación superior y la universidad pública. Ojo: el documento habla de instituciones de educación superior en general.",hl:""},
+ {w:"leo",x:"¿Qué propone para la educación superior?",hl:""},
+ {w:"sol",x:"Propone promover el fortalecimiento financiero de las instituciones de educación superior y los instrumentos de financiación estudiantil del ICETEX.",hl:"f"},
+ {w:"sol",x:"Plantea créditos blandos para población vulnerable y un programa de méritos para que los mejores talentos accedan al programa de su interés.",hl:"a"},
+ {w:"sol",x:"También crea la Universidad Virtual en Casa, para ampliar el acceso a programas técnicos, tecnológicos y universitarios en modalidad virtual.",hl:"v"},
+ {w:"leo",x:"¿Y la investigación?",hl:""},
+ {w:"sol",x:"Reconoce brechas. En 2025 hubo 1.517 graduados de doctorado, 25,6 por millón de habitantes. Y de los 25.514 investigadores reconocidos por MinCiencias en 2024, el 29,9 por ciento estaba en Bogotá y el 15,4 por ciento en Antioquia.",hl:"i"},
+ {w:"sol",x:"Propone fomentar vocaciones científicas, la formación de alto nivel y, mediante incentivos fiscales, la inversión privada en ciencia y tecnología en la educación pública.",hl:"i"},
+ {w:"sol",x:"Sobre autonomía universitaria, el documento afirma que la fuerza pública puede ingresar a los campus para proteger derechos, sin autorización de las directivas, y que la autonomía no puede impedir ese deber del Estado.",hl:"u"},
+ {w:"leo",x:"Eso genera debate, ¿no?",hl:""},
+ {w:"sol",x:"Sí, y por eso conviene deliberarlo en comunidad. Mira las preguntas para conversar.",hl:"q"}],
+ fig:()=>`<div class="stats">
+ <div class="stat" data-k="f"><strong>💰</strong><span>Fortalecimiento financiero de las IES y financiación estudiantil (ICETEX)</span></div>
+ <div class="stat" data-k="a"><strong>🎓</strong><span>Créditos blandos y programa de méritos</span></div>
+ <div class="stat" data-k="v"><strong>💻</strong><span>Universidad Virtual en Casa</span></div>
+ <div class="stat" data-k="i"><strong>🔬</strong><span>Vocaciones científicas, formación de alto nivel, incentivos fiscales a la inversión privada en CTeI</span></div>
+ <div class="stat" data-k="u"><strong>🏛️</strong><span>Autonomía universitaria y deber del Estado en los campus</span></div></div>
+ <h3 style="margin:14px 0 2px;font-size:.95rem" >Investigadores reconocidos por MinCiencias (2024): ¿dónde están?</h3>
+ <div data-k="i"><div class="bar" style="width:60%;background:#c2410c">Bogotá: 29,9 %</div><div class="bar" style="width:31%;min-width:150px;background:#d97706">Antioquia: 15,4 %</div></div>
+ <div data-k="q" class="axcard" style="margin-top:12px"><b>Preguntas para conversar en comunidad</b><ol style="margin:6px 0 0;padding-left:18px">
+ <li>¿Cómo y con qué recursos se concretará el «fortalecimiento financiero» de las instituciones de educación superior públicas?</li>
+ <li>¿Cómo se articulan la autonomía universitaria y el deber del Estado de proteger derechos en los campus?</li>
+ <li>¿Qué lugar tendrá la investigación de las universidades regionales frente a la concentración en Bogotá?</li>
+ <li>¿La modalidad virtual complementa o sustituye la oferta presencial en las regiones?</li></ol></div>
+ <p class="note">Fuente: Bases del PND 2026–2030, eje 2 (Talento, conocimiento e innovación). Verifica el articulado cuando se radique.</p>`},
+{t:"Los números que trae el documento",
  lines:[
  {w:"sol",x:"Veamos algunas cifras que aparecen en las propias bases del Plan.",hl:""},
  {w:"sol",x:"Primero, la aspiración de crecimiento: una trayectoria sostenida superior al 6 por ciento anual del PIB.",hl:"g"},
@@ -176,7 +203,7 @@ const SCENES=[
  <div data-k="s"><div class="bar" style="width:66%;background:#b45309">Daños: 38,66</div><div class="bar" style="width:10%;min-width:120px;background:#d97706">Pérdidas: 5,99</div></div>
  <div data-k="r"><div class="bar" style="width:100%;background:#7c2d12">Necesidades de recuperación: 58,29</div></div>
  <p class="note">Fuente: Bases del PND 2026–2030 (13 nov. 2026), eje 7 y capítulo de regiones.</p>`},
-{t:"4. La ruta: ¿qué sigue?",
+{t:"La ruta: ¿qué sigue?",
  lines:[
  {w:"sol",x:"Esta es la ruta del Plan. El 13 de noviembre de 2026 las bases llegaron al Congreso y al Consejo Nacional de Planeación.",hl:"t1"},
  {w:"sol",x:"En enero de 2027, el Consejo Nacional de Planeación entrega su concepto y recomendaciones.",hl:"t2"},
@@ -187,7 +214,7 @@ const SCENES=[
  <line x1="60" y1="70" x2="700" y2="70" stroke="#c9bba3" stroke-width="4"/>
  ${[["t1",60,"13 nov 2026","Bases entregadas"],["t2",250,"Enero 2027","Concepto del CNP"],["t3",450,"7 feb 2027","Radicación del articulado"],["t4",650,"Feb–May 2027","Debate en el Congreso"]].map(e=>`<g data-k="${e[0]}"><circle cx="${e[1]}" cy="70" r="14" fill="#c2410c"/><text x="${e[1]}" y="115" font-weight="700">${e[2]}</text><text x="${e[1]}" y="138">${e[3]}</text></g>`).join("")}</svg>
  <p class="note">Las fechas provienen de reportes de prensa y del DNP; el plazo de tres meses es la referencia legal general. Confirma las fechas con el Congreso y el DNP.</p>`},
-{t:"5. Tú decides: ¿qué te importa más?",
+{t:"Tú decides: ¿qué te importa más?",
  lines:[
  {w:"sol",x:"Ahora te toca a ti. Tienes siete ejes y puedes dar a cada uno de cero a diez de importancia.",hl:""},
  {w:"leo",x:"¿Eso cambia el presupuesto?",hl:""},
@@ -197,7 +224,7 @@ const SCENES=[
   box.innerHTML=AXES.map((a,i)=>`<div class="sl"><span>${i+1}. ${a.n}</span><input type="range" min="0" max="10" value="${PRIO[i]}" data-i="${i}"><b id="v${i}">${PRIO[i]}</b></div>`).join("");
   const draw=()=>{const tot=PRIO.reduce((a,b)=>a+b,0)||1;document.getElementById("res").innerHTML=AXES.map((a,i)=>`<div class="row"><i style="width:${Math.max(2,PRIO[i]/tot*100*2.4)}px;background:${a.c}"></i>${(PRIO[i]/tot*100).toFixed(0)} % · eje ${i+1}</div>`).join("")};
   box.querySelectorAll("input").forEach(s=>s.oninput=()=>{PRIO[+s.dataset.i]=+s.value;document.getElementById("v"+s.dataset.i).textContent=s.value;draw()});draw()}},
-{t:"6. Tu mensaje para la comunidad",
+{t:"Tu mensaje para la comunidad",
  lines:[
  {w:"sol",x:"Llegó el momento de compartir. Con tus prioridades, armamos un mensaje que puedes editar, escuchar y enviar.",hl:""},
  {w:"leo",x:"Que sea claro y que invite a participar.",hl:""},
@@ -205,17 +232,18 @@ const SCENES=[
  fig:()=>`<div class="grid2"><div><label class="note">Tu nombre (opcional)</label><input type="text" id="mn" placeholder="Ej.: Hernán"></div>
  <div><label class="note">Dirigido a</label><select id="ma"><option>comunidad universitaria</option><option>estudiantes</option><option>vecinas y vecinos</option><option>comunidad</option></select></div></div>
  <div class="grid2" style="margin-top:8px"><div><label class="note">Tono</label><select id="mt"><option value="c">Cercano</option><option value="f">Formal</option></select></div><div><label class="note">&nbsp;</label><button class="btn" id="gen" style="width:100%">✍️ Generar mensaje</button></div></div>
+ <label class="note" style="display:block;margin-top:8px"><input type="checkbox" id="mu" checked> Incluir párrafo sobre universidad pública</label>
  <textarea id="msg" style="margin-top:8px"></textarea>
  <div class="ctrl"><button class="btn alt" id="hear">🔊 Escuchar</button><button class="btn alt" id="copy">📋 Copiar</button><a class="btn" id="wa" target="_blank" rel="noopener" style="text-decoration:none">WhatsApp</a></div>`,
  init:()=>{const g=()=>{const top=[...PRIO.keys()].sort((a,b)=>PRIO[b]-PRIO[a]).slice(0,3).map(i=>AXES[i].n);
    const nm=document.getElementById("mn").value.trim(),au=document.getElementById("ma").value,f=document.getElementById("mt").value==="f";
    const t=f?`Estimada ${au}:\n\nEl Gobierno nacional entregó, el 13 de noviembre de 2026, las bases del Plan Nacional de Desarrollo 2026–2030, «Colombia, la Patria Milagro». Se abre ahora un periodo de revisión y participación que nos corresponde aprovechar.\n\nEl Plan se organiza en siete ejes. Los que considero prioritarios son: ${top[0]}; ${top[1]}; y ${top[2]}.\n\nRuta prevista: el Consejo Nacional de Planeación emitirá su concepto en enero de 2027 y el articulado se radicaría en el Congreso el 7 de febrero de 2027.\n\nLos invito a leer las bases, deliberar en nuestros espacios y presentar propuestas por los canales de participación.\n\nCordialmente,\n${nm||"[Tu nombre]"}`
    :`¡Hola, ${au}!\n\nQuiero contarles algo que nos toca a todas y todos: ya se conocen las bases del Plan Nacional de Desarrollo 2026–2030, «Colombia, la Patria Milagro». Es la hoja de ruta del país para cuatro años.\n\nTiene siete ejes y a mí me importan especialmente: ${top[0]}; ${top[1]}; y ${top[2]}.\n\nLo que viene: en enero de 2027 el Consejo Nacional de Planeación da su concepto, y el 7 de febrero de 2027 se radicaría el articulado en el Congreso. Es el momento de leer, preguntar y opinar.\n\n¿Cuál eje te importa más a ti? Conversemos y llevemos nuestras propuestas. Un plan se construye mejor entre todas y todos.\n\n${nm?"— "+nm:""}`;
-   document.getElementById("msg").value=t;document.getElementById("wa").href="https://wa.me/?text="+encodeURIComponent(t)};
-  document.getElementById("gen").onclick=g;g();
+   const U="Como comunidad de la universidad pública, nos interesa conocer cómo el Plan abordará el fortalecimiento financiero de la educación superior, la investigación en las regiones y la autonomía universitaria. Construyamos juntos preguntas y propuestas para llevarlas a la discusión.";const uni=document.getElementById("mu").checked;let t2=t;if(uni){t2=f?t.replace("\n\nLos invito","\n\n"+U+"\n\nLos invito"):t.replace("\n\n¿Cuál eje","\n\n"+U+"\n\n¿Cuál eje")}document.getElementById("msg").value=t2;document.getElementById("wa").href="https://wa.me/?text="+encodeURIComponent(t2)};
+  document.getElementById("gen").onclick=g;document.getElementById("mu").onchange=g;g();
   document.getElementById("hear").onclick=()=>speakFree("sol",document.getElementById("msg").value);
   document.getElementById("copy").onclick=async e=>{try{await navigator.clipboard.writeText(document.getElementById("msg").value);e.target.textContent="✅ Copiado"}catch(_){document.getElementById("msg").select();document.execCommand("copy")}}}},
-{t:"7. ¿Quedó claro? Mini quiz",
+{t:"¿Quedó claro? Mini quiz",
  lines:[
  {w:"leo",x:"Profe, ¿hacemos un repaso rápido?",hl:""},
  {w:"sol",x:"Claro. Responde y mira si recuerdas lo esencial.",hl:""}],
@@ -225,6 +253,7 @@ const SCENES=[
   ["¿Cuándo se prevé radicar el articulado definitivo?",["13 de noviembre de 2026","7 de febrero de 2027","20 de julio de 2027"],1],
   ["¿Quién se prevé que entregue su concepto en enero de 2027?",["El Consejo Nacional de Planeación","La Corte Constitucional","Cada universidad"],0],
   ["¿Qué aspiración de crecimiento anual plantean las bases?",["Cerca de 2 %","Superior al 6 %","Exactamente 10 %"],1],
+  ["¿Qué crea el Plan para ampliar el acceso virtual a la educación superior?",["La Universidad Virtual en Casa","Una universidad en cada vereda","El Fondo Virtual de Becas"],0],
   ["¿Qué instrumento financiará la reconstrucción tras el sismo del 10 de agosto de 2026?",["El Fondo Milagro","Un fondo de pensiones","El Banco Agrario"],0],
   ["¿Qué es finalmente el Plan Nacional de Desarrollo?",["Un decreto sin debate","Una ley aprobada por el Congreso","Solo un informe"],1]];
   let ok=0,done=0;const el=document.getElementById("quiz");
@@ -253,7 +282,7 @@ function show(i){const L=SCENES[cur].lines[i];li=i;const b=document.getElementBy
 function runLines(i){if(!playing||i>=SCENES[cur].lines.length){playing=false;setTalk("",false);document.getElementById("play").textContent="🔁 Repetir escena";return}
  show(i);say(SCENES[cur].lines[i].w,SCENES[cur].lines[i].x,()=>{if(playing)setTimeout(()=>runLines(i+1),250)})}
 function stopAll(){playing=false;if(synth)synth.cancel();setTalk("",false)}
-function load(i){stopAll();cur=i;const S=SCENES[i];document.getElementById("sceneTitle").textContent=S.t;document.getElementById("fig").innerHTML=S.fig();if(S.init)S.init();
+function load(i){stopAll();cur=i;const S=SCENES[i];document.getElementById("sceneTitle").textContent=(i+1)+". "+S.t;document.getElementById("fig").innerHTML=S.fig();if(S.init)S.init();
  document.querySelectorAll("#dots button").forEach((b,j)=>b.classList.toggle("on",j===i));
  document.getElementById("play").textContent="🔊 Escuchar escena";document.getElementById("prevS").disabled=i===0;document.getElementById("nextS").disabled=i===SCENES.length-1;show(0)}
 document.getElementById("dots").innerHTML=SCENES.map((s,i)=>`<button>${i+1}</button>`).join("");
