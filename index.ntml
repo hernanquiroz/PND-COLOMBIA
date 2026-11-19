@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PND 2026–2030 · Simulación pedagógica para la comunidad</title>
+<style>
+:root{--bg:#fbf6ee;--ink:#1f2a37;--mut:#5b6573;--card:#fff;--line:#e8dfd0;--acc:#c2410c;--sol:#f4a261;--leo:#2a9d8f}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{padding:18px 16px 8px;text-align:center}
+header h1{font-size:1.35rem;margin:0 0 4px}
+header p{margin:0;color:var(--mut);font-size:.92rem}
+main{max-width:980px;margin:0 auto;padding:8px 14px 40px}
+.dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.dots button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:.78rem;cursor:pointer;color:var(--mut)}
+.dots button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+h2{font-size:1.15rem;margin:0 0 8px}
+.stage{display:grid;grid-template-columns:90px 1fr 90px;gap:8px;align-items:end}
+.av{text-align:center;font-size:.75rem;color:var(--mut)}
+.av svg{width:80px;height:auto;transition:transform .2s;opacity:.55}
+.av.act svg{opacity:1;transform:translateY(-4px)}
+.mouth{transform-origin:50px 66px}
+.av.talk .mouth{animation:talk .22s infinite alternate}
+@keyframes talk{from{transform:scaleY(.35)}to{transform:scaleY(1.5)}}
+.bubble{background:#fff7ea;border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:92px;font-size:1rem;position:relative}
+.bubble b{display:block;font-size:.78rem;color:var(--acc);margin-bottom:2px}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+.btn{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:9px 14px;font-size:.92rem;cursor:pointer}
+.btn.alt{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.ctrl label{font-size:.8rem;color:var(--mut)}
+.fig{margin-top:12px}
+.fig svg{width:100%;height:auto}
+[data-k]{transition:all .3s;opacity:.45}
+[data-k].on{opacity:1}
+.flow rect{fill:#fff;stroke:#c9bba3;stroke-width:2}
+.flow .on rect{fill:#ffedd5;stroke:var(--acc)}
+.flow text{font-size:15px;fill:var(--ink);text-anchor:middle}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:#fff}
+.stat strong{display:block;font-size:1.4rem;color:var(--acc)}
+.stat span{font-size:.8rem;color:var(--mut)}
+.bar{height:26px;border-radius:8px;background:var(--acc);color:#fff;font-size:.85rem;padding:3px 10px;margin:6px 0;white-space:nowrap}
+.axcard{margin-top:10px;border-left:6px solid var(--acc);background:#fff;padding:10px 12px;border-radius:8px;border:1px solid var(--line);border-left-width:6px}
+.sl{display:grid;grid-template-columns:1fr 120px 42px;gap:8px;align-items:center;margin:6px 0;font-size:.88rem}
+.sl input{width:100%}
+.res .row{display:flex;align-items:center;gap:8px;font-size:.82rem;margin:3px 0}
+.res .row i{display:block;height:14px;border-radius:7px}
+textarea,select,input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px;font:inherit;background:#fff}
+textarea{min-height:230px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.stage{grid-template-columns:56px 1fr 56px}.av svg{width:52px}.grid2{grid-template-columns:1fr}.sl{grid-template-columns:1fr 90px 36px}}
+.q{margin:12px 0}
+.q label{display:block;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin:4px 0;cursor:pointer}
+.q .ok{background:#dcfce7}.q .bad{background:#fee2e2}
+.note{font-size:.8rem;color:var(--mut)}
+footer{text-align:center;padding:18px 12px 30px;color:var(--mut);font-size:.82rem}
+footer strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇨🇴 «Colombia, la Patria Milagro» · PND 2026–2030</h1>
+  <p>Simulación pedagógica para entender las bases del Plan y participar</p>
+</header>
+<main>
+  <div class="dots" id="dots"></div>
+
+  <section class="card">
+    <div class="stage">
+      <div class="av" id="av-sol"></div>
+      <div class="bubble" id="bubble"><b>…</b>Pulsa «Escuchar escena».</div>
+      <div class="av" id="av-leo"></div>
+    </div>
+    <div class="ctrl">
+      <button class="btn" id="play">🔊 Escuchar escena</button>
+      <button class="btn alt" id="stop">⏹ Parar</button>
+      <button class="btn alt" id="prevL">◀ Línea</button>
+      <button class="btn alt" id="nextL">Línea ▶</button>
+      <label>Velocidad <input type="range" id="rate" min="0.7" max="1.3" step="0.05" value="1"></label>
+    </div>
+    <p class="note" id="voiceNote"></p>
+  </section>
+
+  <section class="card">
+    <h2 id="sceneTitle"></h2>
+    <div class="fig" id="fig"></div>
+  </section>
+
+  <div class="ctrl" style="justify-content:space-between">
+    <button class="btn alt" id="prevS">← Escena anterior</button>
+    <button class="btn" id="nextS">Siguiente escena →</button>
+  </div>
+</main>
+<footer>
+  <p class="note">Ejercicio pedagógico y no partidista. Las cifras y el contenido de los ejes provienen del documento «Bases del Plan Nacional de Desarrollo 2026–2030» (13 de nov. de 2026). Las fechas del cronograma, de reportes de prensa y del DNP (RTVC, Diario del Sur, Portafolio). Verifica siempre en el documento oficial.</p>
+  <p><strong>Diseño Vibe Coding por Ing. Hernán Quiroz</strong></p>
+</footer>
+
+<script>
+/* ===== DATOS EDITABLES: pega aquí lo que quieras ajustar del PDF ===== */
+const AXES=[
+ {n:"El Milagro de las Regiones",c:"#0e7490",q:"¿Qué decisiones deberían tomarse desde los territorios y no solo desde el centro?",detalle:"Según las bases: megaproyectos de alto impacto regional, fortalecimiento de la capacidad institucional territorial, información estratégica y articulación Nación-territorio. Cada municipio presentó tres prioridades de inversión."},
+ {n:"Talento, conocimiento e innovación para el desarrollo",c:"#c2410c",q:"¿Qué papel tienen la educación, la universidad, la ciencia y los jóvenes en el desarrollo?",detalle:"Según las bases: la educación pasa a ser un eje propio. Temas: educación con calidad y equidad (de la educación inicial a la superior), pertinencia ocupacional y formación para crear y apropiar conocimiento. Menciona financiación de las instituciones de educación superior y una «Universidad Virtual en Casa»."},
+ {n:"Patriotismo Constitucional",c:"#1d4ed8",q:"¿Cómo se vive la Constitución en la seguridad, la justicia y la participación?",detalle:"Según las bases: seguridad y defensa, acceso a la justicia, democracia y participación ciudadana, territorios que más han sufrido la guerra, y política exterior."},
+ {n:"El Milagro Social",c:"#be185d",q:"¿Cómo se cierran brechas en salud, alimentación, cuidado, vivienda y empleo?",detalle:"Según las bases: salud y seguridad alimentaria, prosperidad compartida, cuidado y bienestar, cultura y deporte, vivienda, movilidad y servicios públicos, y pueblos y comunidades étnicas."},
+ {n:"Milagro Económico",c:"#15803d",q:"¿Qué hace falta para crecer, invertir y generar empleo formal, y quién se beneficia?",detalle:"Según las bases: recuperar la inversión privada, transformación productiva y empleo formal, Colombia como socio confiable del mundo, y agua, biodiversidad y comunidad. Aspira a un crecimiento sostenido superior al 6 % anual."},
+ {n:"Un Estado con propósito",c:"#7c3aed",q:"¿Cómo lograr un Estado más eficiente, ágil y cercano a la gente?",detalle:"Según las bases: tres principios: esencialidad, ventanillas únicas y competencias claras. Temas: Estado cercano al ciudadano, al sector productivo, orden interno y estabilidad macroeconómica y fiscal."},
+ {n:"Reconstrucción, transformación y resiliencia",c:"#b45309",q:"¿Cómo se reconstruye el occidente tras el sismo y cómo preparamos los territorios para futuros desastres?",detalle:"Según las bases: el Fondo Milagro financiará y articulará la reconstrucción tras el sismo del 10 de agosto de 2026. Temas: reconstrucción física, recuperación productiva y financiación."}
+];
+const SP={
+ sol:{name:"Profe Sol",color:"#f4a261",hair:"#4a2c17",pitch:1.1},
+ leo:{name:"Leo, vecino curioso",color:"#2a9d8f",hair:"#1f2937",pitch:0.8}
+};
+const PRIO=new Array(7).fill(5);
+/* ===== AVATARES ===== */
+function avatar(k){const s=SP[k];return `<svg viewBox="0 0 100 120" aria-hidden="true">
+<circle cx="50" cy="48" r="30" fill="#f6d5b5"/><path d="M20 44a30 30 0 0 1 60 0c-10-12-50-12-60 0z" fill="${s.hair}"/>
+<circle cx="40" cy="48" r="3.5" fill="#222"/><circle cx="60" cy="48" r="3.5" fill="#222"/>
+<ellipse class="mouth" cx="50" cy="66" rx="8" ry="3.2" fill="#8b1d1d"/>
+<path d="M18 120c0-26 14-38 32-38s32 12 32 38z" fill="${s.color}"/></svg><div>${s.name}</div>`}
+document.getElementById("av-sol").innerHTML=avatar("sol");
+document.getElementById("av-leo").innerHTML=avatar("leo");
+/* ===== ESCENAS ===== */
+const axNames=AXES.map(a=>a.n);
+const SCENES=[
+{t:"1. ¿Qué es un Plan Nacional de Desarrollo?",
+ lines:[
+ {w:"sol",x:"Hola, comunidad. Hoy vamos a entender, paso a paso, las bases del Plan Nacional de Desarrollo 2026 a 2030, llamado «Colombia, la Patria Milagro».",hl:""},
+ {w:"leo",x:"Profe, ¿y qué es un plan de desarrollo? Suena a documento que nadie lee.",hl:""},
+ {w:"sol",x:"Es la hoja de ruta del gobierno para cuatro años. Tiene tres piezas. Primero, las bases, que dicen hacia dónde vamos.",hl:"a"},
+ {w:"sol",x:"Segundo, el articulado, que son los artículos que el Congreso convierte en ley.",hl:"b"},
+ {w:"sol",x:"Y tercero, el plan de inversiones, que dice con qué recursos se hará.",hl:"c"},
+ {w:"sol",x:"El documento dice que la Patria Milagro se apoya en cuatro principios: la vida, la familia, la libertad personal y la seguridad.",hl:""},
+ {w:"leo",x:"O sea que todavía no es ley.",hl:"d"},
+ {w:"sol",x:"Exacto. Las bases se entregaron el 13 de noviembre de 2026. Ahora viene el tiempo de leer, discutir y participar.",hl:"d"}],
+ fig:()=>`<svg viewBox="0 0 760 150" class="flow">
+ <g data-k="a"><rect x="10" y="30" width="160" height="80" rx="14"/><text x="90" y="65">📘 Bases</text><text x="90" y="90">hacia dónde vamos</text></g>
+ <g data-k="b"><rect x="205" y="30" width="160" height="80" rx="14"/><text x="285" y="65">📜 Articulado</text><text x="285" y="90">los artículos</text></g>
+ <g data-k="c"><rect x="400" y="30" width="160" height="80" rx="14"/><text x="480" y="65">💰 Inversiones</text><text x="480" y="90">con qué recursos</text></g>
+ <g data-k="d"><rect x="595" y="30" width="155" height="80" rx="14"/><text x="672" y="65">🏛️ Congreso</text><text x="672" y="90">lo discute y aprueba</text></g>
+ <path d="M172 70h30M367 70h30M562 70h30" stroke="#c2410c" stroke-width="3" marker-end="url(#ar)"/>
+ <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#c2410c"/></marker></defs></svg>`},
+{t:"2. Los siete ejes",
+ lines:[
+ {w:"sol",x:"El Plan se organiza en siete ejes. Toca cada porción del círculo para explorarlo.",hl:""},
+ {w:"leo",x:"¿Cuáles son?",hl:""},
+ {w:"sol",x:"Uno: "+axNames[0]+". Dos: "+axNames[1]+". Tres: "+axNames[2]+". Cuatro: "+axNames[3]+".",hl:""},
+ {w:"sol",x:"Cinco: "+axNames[4]+". Seis: "+axNames[5]+". Y siete: "+axNames[6]+".",hl:""},
+ {w:"leo",x:"Mucho para leer. ¿Por dónde empiezo?",hl:""},
+ {w:"sol",x:"Por una pregunta: ¿cuál de estos ejes toca más mi vida? Explóralos y verás.",hl:""}],
+ fig:()=>`<svg viewBox="-150 -150 300 300" style="max-width:380px;display:block;margin:auto" id="wheel"></svg><div id="axinfo" class="axcard">Toca un eje del círculo.</div>`,
+ init:()=>{const w=document.getElementById("wheel");const R=140,r=52;let h="";
+  AXES.forEach((a,i)=>{const a0=i*2*Math.PI/7-Math.PI/2,a1=(i+1)*2*Math.PI/7-Math.PI/2,P=(rad,ang)=>[(rad*Math.cos(ang)).toFixed(1),(rad*Math.sin(ang)).toFixed(1)];
+   const[p0,p1,p2,p3]=[P(R,a0),P(R,a1),P(r,a1),P(r,a0)];const m=(a0+a1)/2,tp=P(98,m);
+   h+=`<g style="cursor:pointer" data-i="${i}"><path d="M${p0}A${R},${R} 0 0 1 ${p1}L${p2}A${r},${r} 0 0 0 ${p3}Z" fill="${a.c}" stroke="#fff" stroke-width="3"/><text x="${tp[0]}" y="${tp[1]}" fill="#fff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">${i+1}</text></g>`});
+  h+=`<text x="0" y="-4" text-anchor="middle" font-size="13" font-weight="700">7 ejes</text><text x="0" y="14" text-anchor="middle" font-size="11">PND 2026–2030</text>`;
+  w.innerHTML=h;
+  w.querySelectorAll("g[data-i]").forEach(g=>g.onclick=()=>{const a=AXES[+g.dataset.i];const b=document.getElementById("axinfo");b.style.borderLeftColor=a.c;
+   b.innerHTML=`<b>Eje ${+g.dataset.i+1}: ${a.n}</b><br>Pregunta para reflexionar: ${a.q}${a.detalle?"<br><small>"+a.detalle+"</small>":""}`;
+   speakFree("sol","Eje "+(+g.dataset.i+1)+": "+a.n+". Pregúntate: "+a.q)})}},
+{t:"3. Los números que trae el documento",
+ lines:[
+ {w:"sol",x:"Veamos algunas cifras que aparecen en las propias bases del Plan.",hl:""},
+ {w:"sol",x:"Primero, la aspiración de crecimiento: una trayectoria sostenida superior al 6 por ciento anual del PIB.",hl:"g"},
+ {w:"leo",x:"¿Y la inversión?",hl:""},
+ {w:"sol",x:"Las Milagro Weeks identificaron 119 megaproyectos, principalmente de inversión privada, estimados en más de 150 billones de pesos. Más del 90 por ciento está en transporte, comunicaciones, y minas y energía.",hl:"m"},
+ {w:"sol",x:"Y el sismo del 10 de agosto de 2026, de magnitud 7,4 y con epicentro en San José del Palmar, Chocó, dejó daños por 38,66 billones y pérdidas por 5,99 billones. Cerca del 2,3 por ciento del PIB.",hl:"s"},
+ {w:"leo",x:"¿Y cuánto cuesta recuperarse?",hl:""},
+ {w:"sol",x:"Las necesidades de recuperación se estiman en 58,29 billones, según la UNGRD citada en las bases.",hl:"r"},
+ {w:"sol",x:"Ojo: el documento aclara que incluir un proyecto en los anexos no implica viabilidad, compromiso presupuestal ni asignación de recursos.",hl:""}],
+ fig:()=>`<div class="stats"><div class="stat" data-k="g"><strong>&gt; 6 %</strong><span>crecimiento anual sostenido al que aspira el Plan</span></div><div class="stat" data-k="m"><strong>119</strong><span>megaproyectos · más de $150 billones</span></div><div class="stat" data-k="s"><strong>7,4 Mw</strong><span>sismo del 10 ago 2026 · ≈ 2,3 % del PIB</span></div></div>
+ <h3 style="margin:14px 0 2px;font-size:.95rem">Sismo: daños, pérdidas y necesidad de recuperación (billones COP)</h3>
+ <div data-k="s"><div class="bar" style="width:66%;background:#b45309">Daños: 38,66</div><div class="bar" style="width:10%;min-width:120px;background:#d97706">Pérdidas: 5,99</div></div>
+ <div data-k="r"><div class="bar" style="width:100%;background:#7c2d12">Necesidades de recuperación: 58,29</div></div>
+ <p class="note">Fuente: Bases del PND 2026–2030 (13 nov. 2026), eje 7 y capítulo de regiones.</p>`},
+{t:"4. La ruta: ¿qué sigue?",
+ lines:[
+ {w:"sol",x:"Esta es la ruta del Plan. El 13 de noviembre de 2026 las bases llegaron al Congreso y al Consejo Nacional de Planeación.",hl:"t1"},
+ {w:"sol",x:"En enero de 2027, el Consejo Nacional de Planeación entrega su concepto y recomendaciones.",hl:"t2"},
+ {w:"sol",x:"El 7 de febrero de 2027 se prevé radicar el articulado definitivo en el Congreso.",hl:"t3"},
+ {w:"leo",x:"¿Y cuándo se aprueba?",hl:""},
+ {w:"sol",x:"Empieza entonces el debate legislativo, con un plazo legal limitado: la Ley 152 de 1994 lo fija en tres meses. Esa es la ventana para opinar.",hl:"t4"}],
+ fig:()=>`<svg viewBox="0 0 760 190" class="flow">
+ <line x1="60" y1="70" x2="700" y2="70" stroke="#c9bba3" stroke-width="4"/>
+ ${[["t1",60,"13 nov 2026","Bases entregadas"],["t2",250,"Enero 2027","Concepto del CNP"],["t3",450,"7 feb 2027","Radicación del articulado"],["t4",650,"Feb–May 2027","Debate en el Congreso"]].map(e=>`<g data-k="${e[0]}"><circle cx="${e[1]}" cy="70" r="14" fill="#c2410c"/><text x="${e[1]}" y="115" font-weight="700">${e[2]}</text><text x="${e[1]}" y="138">${e[3]}</text></g>`).join("")}</svg>
+ <p class="note">Las fechas provienen de reportes de prensa y del DNP; el plazo de tres meses es la referencia legal general. Confirma las fechas con el Congreso y el DNP.</p>`},
+{t:"5. Tú decides: ¿qué te importa más?",
+ lines:[
+ {w:"sol",x:"Ahora te toca a ti. Tienes siete ejes y puedes dar a cada uno de cero a diez de importancia.",hl:""},
+ {w:"leo",x:"¿Eso cambia el presupuesto?",hl:""},
+ {w:"sol",x:"No. Es un ejercicio para pensar tus prioridades, no una asignación real. Pero te servirá para tu mensaje a la comunidad.",hl:""}],
+ fig:()=>`<div id="sliders"></div><h2 style="margin-top:12px">Tus prioridades</h2><div class="res" id="res"></div>`,
+ init:()=>{const box=document.getElementById("sliders");
+  box.innerHTML=AXES.map((a,i)=>`<div class="sl"><span>${i+1}. ${a.n}</span><input type="range" min="0" max="10" value="${PRIO[i]}" data-i="${i}"><b id="v${i}">${PRIO[i]}</b></div>`).join("");
+  const draw=()=>{const tot=PRIO.reduce((a,b)=>a+b,0)||1;document.getElementById("res").innerHTML=AXES.map((a,i)=>`<div class="row"><i style="width:${Math.max(2,PRIO[i]/tot*100*2.4)}px;background:${a.c}"></i>${(PRIO[i]/tot*100).toFixed(0)} % · eje ${i+1}</div>`).join("")};
+  box.querySelectorAll("input").forEach(s=>s.oninput=()=>{PRIO[+s.dataset.i]=+s.value;document.getElementById("v"+s.dataset.i).textContent=s.value;draw()});draw()}},
+{t:"6. Tu mensaje para la comunidad",
+ lines:[
+ {w:"sol",x:"Llegó el momento de compartir. Con tus prioridades, armamos un mensaje que puedes editar, escuchar y enviar.",hl:""},
+ {w:"leo",x:"Que sea claro y que invite a participar.",hl:""},
+ {w:"sol",x:"Eso hacemos. Un plan se construye mejor entre todas y todos.",hl:""}],
+ fig:()=>`<div class="grid2"><div><label class="note">Tu nombre (opcional)</label><input type="text" id="mn" placeholder="Ej.: Hernán"></div>
+ <div><label class="note">Dirigido a</label><select id="ma"><option>comunidad universitaria</option><option>estudiantes</option><option>vecinas y vecinos</option><option>comunidad</option></select></div></div>
+ <div class="grid2" style="margin-top:8px"><div><label class="note">Tono</label><select id="mt"><option value="c">Cercano</option><option value="f">Formal</option></select></div><div><label class="note">&nbsp;</label><button class="btn" id="gen" style="width:100%">✍️ Generar mensaje</button></div></div>
+ <textarea id="msg" style="margin-top:8px"></textarea>
+ <div class="ctrl"><button class="btn alt" id="hear">🔊 Escuchar</button><button class="btn alt" id="copy">📋 Copiar</button><a class="btn" id="wa" target="_blank" rel="noopener" style="text-decoration:none">WhatsApp</a></div>`,
+ init:()=>{const g=()=>{const top=[...PRIO.keys()].sort((a,b)=>PRIO[b]-PRIO[a]).slice(0,3).map(i=>AXES[i].n);
+   const nm=document.getElementById("mn").value.trim(),au=document.getElementById("ma").value,f=document.getElementById("mt").value==="f";
+   const t=f?`Estimada ${au}:\n\nEl Gobierno nacional entregó, el 13 de noviembre de 2026, las bases del Plan Nacional de Desarrollo 2026–2030, «Colombia, la Patria Milagro». Se abre ahora un periodo de revisión y participación que nos corresponde aprovechar.\n\nEl Plan se organiza en siete ejes. Los que considero prioritarios son: ${top[0]}; ${top[1]}; y ${top[2]}.\n\nRuta prevista: el Consejo Nacional de Planeación emitirá su concepto en enero de 2027 y el articulado se radicaría en el Congreso el 7 de febrero de 2027.\n\nLos invito a leer las bases, deliberar en nuestros espacios y presentar propuestas por los canales de participación.\n\nCordialmente,\n${nm||"[Tu nombre]"}`
+   :`¡Hola, ${au}!\n\nQuiero contarles algo que nos toca a todas y todos: ya se conocen las bases del Plan Nacional de Desarrollo 2026–2030, «Colombia, la Patria Milagro». Es la hoja de ruta del país para cuatro años.\n\nTiene siete ejes y a mí me importan especialmente: ${top[0]}; ${top[1]}; y ${top[2]}.\n\nLo que viene: en enero de 2027 el Consejo Nacional de Planeación da su concepto, y el 7 de febrero de 2027 se radicaría el articulado en el Congreso. Es el momento de leer, preguntar y opinar.\n\n¿Cuál eje te importa más a ti? Conversemos y llevemos nuestras propuestas. Un plan se construye mejor entre todas y todos.\n\n${nm?"— "+nm:""}`;
+   document.getElementById("msg").value=t;document.getElementById("wa").href="https://wa.me/?text="+encodeURIComponent(t)};
+  document.getElementById("gen").onclick=g;g();
+  document.getElementById("hear").onclick=()=>speakFree("sol",document.getElementById("msg").value);
+  document.getElementById("copy").onclick=async e=>{try{await navigator.clipboard.writeText(document.getElementById("msg").value);e.target.textContent="✅ Copiado"}catch(_){document.getElementById("msg").select();document.execCommand("copy")}}}},
+{t:"7. ¿Quedó claro? Mini quiz",
+ lines:[
+ {w:"leo",x:"Profe, ¿hacemos un repaso rápido?",hl:""},
+ {w:"sol",x:"Claro. Responde y mira si recuerdas lo esencial.",hl:""}],
+ fig:()=>`<div id="quiz"></div><p id="score" style="font-weight:700"></p>`,
+ init:()=>{const Q=[
+  ["¿Cuántos ejes tienen las bases del PND 2026–2030?",["Cinco","Siete","Diez"],1],
+  ["¿Cuándo se prevé radicar el articulado definitivo?",["13 de noviembre de 2026","7 de febrero de 2027","20 de julio de 2027"],1],
+  ["¿Quién se prevé que entregue su concepto en enero de 2027?",["El Consejo Nacional de Planeación","La Corte Constitucional","Cada universidad"],0],
+  ["¿Qué aspiración de crecimiento anual plantean las bases?",["Cerca de 2 %","Superior al 6 %","Exactamente 10 %"],1],
+  ["¿Qué instrumento financiará la reconstrucción tras el sismo del 10 de agosto de 2026?",["El Fondo Milagro","Un fondo de pensiones","El Banco Agrario"],0],
+  ["¿Qué es finalmente el Plan Nacional de Desarrollo?",["Un decreto sin debate","Una ley aprobada por el Congreso","Solo un informe"],1]];
+  let ok=0,done=0;const el=document.getElementById("quiz");
+  el.innerHTML=Q.map((q,i)=>`<div class="q"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<label data-q="${i}" data-j="${j}">${o}</label>`).join("")}</div>`).join("");
+  el.querySelectorAll("label").forEach(l=>l.onclick=()=>{const i=+l.dataset.q;if(l.parentNode.dataset.d)return;l.parentNode.dataset.d=1;const good=+l.dataset.j===Q[i][2];
+   l.classList.add(good?"ok":"bad");if(!good)l.parentNode.querySelector(`[data-j="${Q[i][2]}"]`).classList.add("ok");if(good)ok++;done++;
+   if(done===Q.length){const m=`Obtuviste ${ok} de ${Q.length}. ¡Gracias por informarte y participar!`;document.getElementById("score").textContent=m;speakFree("sol",m)}})}}
+];
+/* ===== VOZ ===== */
+const synth=window.speechSynthesis;let voices=[],cur=0,li=0,playing=false;
+function loadVoices(){voices=(synth?synth.getVoices():[]).filter(v=>/^es/i.test(v.lang));
+ const n=document.getElementById("voiceNote");n.textContent=!synth?"Tu navegador no tiene voz; leerás los diálogos en pantalla.":voices.length?"Voces en español disponibles: "+voices.length+".":"No se encontró voz en español; se usará la predeterminada."}
+if(synth){loadVoices();synth.onvoiceschanged=loadVoices}else loadVoices();
+function pick(who){if(!voices.length)return null;const pref=["es-CO","es-MX","es-US","es-ES","es-AR"];
+ const s=[...voices].sort((a,b)=>pref.findIndex(p=>a.lang.startsWith(p))-pref.findIndex(p=>b.lang.startsWith(p)));
+ return who==="sol"?s[0]:(s[1]||s[0])}
+function setTalk(who,on){["sol","leo"].forEach(k=>{const e=document.getElementById("av-"+k);e.classList.toggle("act",on&&k===who);e.classList.toggle("talk",on&&k===who)})}
+function say(who,text,done){if(!synth){setTimeout(done,Math.min(6000,text.length*55));return}
+ const u=new SpeechSynthesisUtterance(text);const v=pick(who);if(v)u.voice=v;u.lang=v?v.lang:"es-CO";u.pitch=SP[who].pitch;u.rate=+document.getElementById("rate").value;
+ u.onstart=()=>setTalk(who,true);u.onend=()=>{setTalk(who,false);done&&done()};u.onerror=()=>{setTalk(who,false);done&&done()};synth.speak(u)}
+function speakFree(who,text){playing=false;if(synth)synth.cancel();say(who,text)}
+/* ===== ESCENAS: control ===== */
+function show(i){const L=SCENES[cur].lines[i];li=i;const b=document.getElementById("bubble");b.innerHTML=`<b>${SP[L.w].name}</b>${L.x}`;
+ document.querySelectorAll("#fig [data-k]").forEach(e=>e.classList.toggle("on",e.dataset.k===L.hl||(L.hl==="d"&&false)));
+ ["sol","leo"].forEach(k=>document.getElementById("av-"+k).classList.toggle("act",k===L.w))}
+function runLines(i){if(!playing||i>=SCENES[cur].lines.length){playing=false;setTalk("",false);document.getElementById("play").textContent="🔁 Repetir escena";return}
+ show(i);say(SCENES[cur].lines[i].w,SCENES[cur].lines[i].x,()=>{if(playing)setTimeout(()=>runLines(i+1),250)})}
+function stopAll(){playing=false;if(synth)synth.cancel();setTalk("",false)}
+function load(i){stopAll();cur=i;const S=SCENES[i];document.getElementById("sceneTitle").textContent=S.t;document.getElementById("fig").innerHTML=S.fig();if(S.init)S.init();
+ document.querySelectorAll("#dots button").forEach((b,j)=>b.classList.toggle("on",j===i));
+ document.getElementById("play").textContent="🔊 Escuchar escena";document.getElementById("prevS").disabled=i===0;document.getElementById("nextS").disabled=i===SCENES.length-1;show(0)}
+document.getElementById("dots").innerHTML=SCENES.map((s,i)=>`<button>${i+1}</button>`).join("");
+document.querySelectorAll("#dots button").forEach((b,i)=>b.onclick=()=>load(i));
+document.getElementById("play").onclick=()=>{stopAll();playing=true;document.getElementById("play").textContent="🔊 Hablando…";runLines(0)};
+document.getElementById("stop").onclick=()=>{stopAll();document.getElementById("play").textContent="🔊 Escuchar escena"};
+document.getElementById("nextL").onclick=()=>{stopAll();show(Math.min(li+1,SCENES[cur].lines.length-1))};
+document.getElementById("prevL").onclick=()=>{stopAll();show(Math.max(li-1,0))};
+document.getElementById("nextS").onclick=()=>load(Math.min(cur+1,SCENES.length-1));
+document.getElementById("prevS").onclick=()=>load(Math.max(cur-1,0));
+load(0);
+</script>
+</body>
+</html>
